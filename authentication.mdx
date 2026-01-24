@@ -1,0 +1,149 @@
+---
+title: Authentication and Permissions in StackStudio
+description: Manage secure access to StackStudio with authentication methods and permission controls for teams and projects.
+---
+
+## Overview
+
+StackStudio provides robust authentication to secure your access to projects and APIs. You authenticate using API keys for server-to-server interactions or OAuth for user logins. Permissions follow role-based access control (RBAC) to manage what teams can do across projects.
+
+<Callout kind="info">
+  Generate your API key from the [dashboard](https://dashboard.example.com/settings/api-keys) before proceeding.
+</Callout>
+
+## Authentication Methods
+
+Choose from API keys for simple integrations or OAuth for interactive apps. Use the method that fits your use case.
+
+<Tabs>
+  <Tab title="API Key" icon="key">
+    API keys work for most backend requests. Add them to the `Authorization` header.
+
+    <ParamField header="Authorization" param-type="string" required="true">
+      Format: `Bearer YOUR_API_KEY`
+    </ParamField>
+
+    <CodeGroup tabs="JavaScript,Python,cURL">
+      ```javascript
+      const response = await fetch('https://api.example.com/v1/projects', {
+        headers: {
+          'Authorization': 'Bearer YOUR_API_KEY',
+          'Content-Type': 'application/json'
+        }
+      });
+      ```
+      ```python
+      import requests
+      response = requests.get(
+        'https://api.example.com/v1/projects',
+        headers={'Authorization': 'Bearer YOUR_API_KEY'}
+      )
+      ```
+      ```bash
+      curl -H "Authorization: Bearer YOUR_API_KEY" \
+           https://api.example.com/v1/projects
+      ```
+    </CodeGroup>
+  </Tab>
+
+  <Tab title="OAuth 2.0" icon="shield">
+    For user-facing apps, use OAuth to get access tokens.
+
+    <Steps>
+      <Step title="Authorize" icon="login">
+        Redirect users to `https://auth.example.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code`.
+      </Step>
+      <Step title="Exchange Code" icon="arrow-right">
+        POST the code to `https://auth.example.com/oauth/token`.
+      </Step>
+    </Steps>
+
+    <Request tabs="cURL">
+      ```bash
+      curl -X POST https://auth.example.com/oauth/token \
+        -d "grant_type=authorization_code" \
+        -d "client_id=YOUR_CLIENT_ID" \
+        -d "client_secret=YOUR_CLIENT_SECRET" \
+        -d "code=AUTH_CODE" \
+        -d "redirect_uri=YOUR_REDIRECT_URI"
+      ```
+    </Request>
+
+    <Response tabs="200">
+      ```json
+      {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "token_type": "Bearer",
+        "expires_in": 3600
+      }
+      ```
+    </Response>
+  </Tab>
+</Tabs>
+
+## Role-Based Access Control
+
+StackStudio uses RBAC to define permissions. Assign roles to users or teams for fine-grained control.
+
+<Columns cols={2}>
+  <Card title="Admin" icon="shield">
+    Full access: create, edit, delete projects and invite members.
+  </Card>
+  <Card title="Editor" icon="edit-3">
+    Edit projects and resources, but cannot delete or manage members.
+  </Card>
+  <Card title="Viewer" icon="eye">
+    Read-only access to projects and reports.
+  </Card>
+  <Card title="Custom" icon="settings">
+    Define granular permissions per project.
+  </Card>
+</Columns>
+
+## Managing Team Permissions
+
+Set up team permissions via the dashboard or API.
+
+<Steps>
+  <Step title="Invite Team" icon="users">
+    Go to project settings and add members by email.
+  </Step>
+  <Step title="Assign Roles" icon="user-check">
+    Select a role from the dropdown for each member.
+  </Step>
+  <Step title="API Update" icon="code">
+    Use the teams endpoint to automate.
+
+    ```javascript
+    await fetch('https://api.example.com/v1/teams/TEAM_ID/permissions', {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: 'user123',
+        role: 'editor'
+      })
+    });
+    ```
+  </Step>
+</Steps>
+
+<Expandable title="Advanced Permission Scopes" default-open="false">
+  Use scopes like `projects:read`, `projects:write` for API keys. Limit scopes during key generation to follow least-privilege principle.
+
+  | Scope            | Description                  |
+  |------------------|------------------------------|
+  | `projects:read`  | View project details         |
+  | `projects:write` | Edit and create projects     |
+  | `teams:manage`   | Manage team members          |
+</Expandable>
+
+## Security Best Practices
+
+<Callout kind="alert">
+  Rotate API keys every 90 days. Never commit keys to code repositories. Use environment variables like `process.env.STACKSTUDIO_API_KEY`.
+</Callout>
+
+Monitor access logs in the dashboard to detect anomalies. Enable two-factor authentication (2FA) for all team members.

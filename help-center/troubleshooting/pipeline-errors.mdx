@@ -1,0 +1,30 @@
+---
+title: Pipeline Build Fails
+description: Quick fix for pipeline build problems.
+---
+
+## Symptoms
+
+- Pipeline status shows "Failed"
+- Build logs display errors
+
+## Possible Causes
+
+- Missing configuration file
+- Invalid environment variables
+
+## Quick Fix
+
+<Steps>
+  <Step title="Check config">
+    ````bash
+    Ensure `stackstudio.yml` exists in your repo root.
+    ````
+  </Step>
+  <Step title="Review variables">
+    Check environment variables in project settings for typos or missing values.
+  </Step>
+  <Step title="Rerun pipeline">
+    Click "Retry" on the pipeline page after fixes.
+  </Step>
+</Steps>

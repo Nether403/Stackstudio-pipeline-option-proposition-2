@@ -1,0 +1,116 @@
+---
+title: Introduction to StackStudio
+description: Discover StackStudio, an inclusive platform for planning and development that streamlines idea execution through a unified pipeline, reducing complexity and friction.
+---
+
+## Overview
+
+StackStudio empowers you to turn ideas into reality with a unified pipeline that handles planning, development, and deployment. You streamline processes across teams, eliminate silos, and focus on execution without friction. Whether you're a solo developer or leading a large team, StackStudio reduces complexity by integrating tools into one intuitive platform.
+
+<Callout kind="info">
+  StackStudio supports teams of all sizes, from startups to enterprises, with scalable workflows and real-time collaboration.
+</Callout>
+
+## Key Features
+
+StackStudio delivers powerful capabilities designed for seamless idea execution.
+
+<Columns cols={3}>
+  <Card title="Unified Pipeline" icon="git-branch" href="/quickstart">
+    Manage your entire workflow—from ideation to deployment—in one place. Automate handoffs and track progress visually.
+  </Card>
+  <Card title="Real-Time Collaboration" icon="users" href="/collaboration">
+    Invite team members, share plans, and resolve issues instantly with live updates and comments.
+  </Card>
+  <Card title="Integrated Tools" icon="layers" href="/integrations">
+    Connect your favorite services like GitHub, Slack, and Jira without leaving StackStudio.
+  </Card>
+</Columns>
+
+## Target Users and Use Cases
+
+StackStudio serves diverse teams with tailored workflows.
+
+<Tabs>
+  <Tab title="Developers" icon="code">
+    Solo developers prototype apps quickly. Use the pipeline to plan features, code sprints, and deploy without tool-switching.
+  </Tab>
+  <Tab title="Product Managers" icon="trending-up">
+    Align teams on roadmaps. Visualize dependencies, assign tasks, and monitor milestones in real time.
+  </Tab>
+  <Tab title="Engineering Leads" icon="settings">
+    Scale projects across squads. Enforce standards, automate reviews, and gain insights from analytics dashboards.
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+Get up and running in minutes.
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Create your free account at `https://dashboard.example.com/signup`. No credit card required.
+  </Step>
+  <Step title="Create a Project" icon="plus">
+    Click **New Project** and select a template for your use case, like "Web App" or "Mobile MVP".
+  </Step>
+  <Step title="Build Your Pipeline" icon="git-branch">
+    Drag and drop stages: Plan → Develop → Review → Deploy. Assign tasks to team members.
+  </Step>
+  <Step title="Connect Integrations" icon="plug">
+    Add GitHub repos and Slack channels via the settings panel.
+
+````bash
+# Example: Connect GitHub via API
+curl -X POST https://api.example.com/v1/integrations \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{"provider": "github", "repo": "your-org/your-repo"}'
+````
+
+  </Step>
+</Steps>
+
+<CodeGroup tabs="JavaScript,Python">
+```javascript
+// Fetch your first project
+const response = await fetch('https://api.example.com/v1/projects', {
+  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }
+});
+const projects = await response.json();
+console.log(projects);
+```
+
+```python
+import requests
+
+response = requests.get(
+    'https://api.example.com/v1/projects',
+    headers={'Authorization': 'Bearer YOUR_API_KEY'}
+)
+projects = response.json()
+print(projects)
+```
+</CodeGroup>
+
+## Documentation Navigation
+
+Explore the docs to dive deeper.
+
+<Columns cols={2}>
+  <Card title="Quickstart Guide" icon="rocket" href="/quickstart">
+    Set up your first pipeline and run a sample project.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Secure your API access with keys and OAuth.
+  </Card>
+  <Card title="API Reference" icon="api" href="/api">
+    Full endpoints for programmatic control.
+  </Card>
+  <Card title="Changelog" icon="git-commit" href="/changelog">
+    Stay updated with the latest releases.
+  </Card>
+</Columns>
+
+<Callout kind="tip">
+  Start with the <a href="/quickstart">Quickstart</a> to build your first pipeline. Need help? Check the <a href="/help-center">Help Center</a>.
+</Callout>
